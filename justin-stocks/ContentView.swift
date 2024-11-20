@@ -14,25 +14,40 @@ struct ContentView: View {
     @Query private var items: [Item]
     
     @State private var showLoginModal = true
-
+    
+    private func logout() {
+        appState.clearToken()
+    }
+    
     var body: some View {
         ZStack {
             NavigationSplitView {
-                List {
-                    ForEach(items) { item in
-                        NavigationLink {
-                            Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                        } label: {
-                            Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                VStack {
+                    List {
+                        ForEach(items) { item in
+                            NavigationLink {
+                                Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                            } label: {
+                                Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                            }
                         }
+                        .onDelete(perform: deleteItems)
                     }
-                    .onDelete(perform: deleteItems)
-                }
-                .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-            } detail: {
-                Text(appState.authToken ?? "Unknown User")
-                    .font(.caption)
+                    .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+                    Spacer()
+                    Button("Logout") {
+                        logout()
+                    }
+                    .disabled(!appState.isLoggedIn)
                     .padding()
+                }
+            } detail: {
+                VStack {
+                    Text(appState.authToken ?? "Unknown User")
+                        .font(.caption)
+                        .padding()
+                    Text(appState.userId?.uuidString ?? "Unknown UUID")
+                }
             }
             .sheet(isPresented: .constant(!appState.isLoggedIn)) {
                 LoginView()

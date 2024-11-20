@@ -13,7 +13,7 @@ class LoginViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var isRegistering = false
     @Published var errorMessage: String?
-    
+        
     func clearFields() {
         username = ""
         password = ""
@@ -26,19 +26,22 @@ class LoginViewModel: ObservableObject {
         }
         isLoading = true
         errorMessage = nil
-        
+                
         // API Call
         APIManager.shared.login(username: username, password: password) { result in
             switch result {
             case .success(let response):
                 if response.error {
                     print("Login failed: \(response.reason ?? "Unknown error")")
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.errorMessage = response.reason
+                    }
                 } else {
                     print("Login successful! Token: \(response.token ?? "")")
                     self.clearFields()
                     DispatchQueue.main.async {
-                        appState.authToken = response.token
-                        appState.isLoggedIn = true
+                        appState.saveToken(response.token!)
                         self.isLoading = false
                     }
                 }
