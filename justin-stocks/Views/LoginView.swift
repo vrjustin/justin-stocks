@@ -11,13 +11,11 @@ struct LoginView: View {
     
     @EnvironmentObject var appState: AppState
     @StateObject private var viewModel = LoginViewModel()
-        
-    @State private var isRegistering = false
     
-    private func handleAuthentication() {
+    private func handleLoginOrRegister() {
         print("Handle Authentication called")
         viewModel.errorMessage = nil
-        if isRegistering {
+        if viewModel.isRegistering {
             registerUser()
         } else {
             loginUser()
@@ -26,6 +24,7 @@ struct LoginView: View {
     
     private func registerUser() {
         print("Register user called")
+        viewModel.register()
     }
     
     private func loginUser() {
@@ -39,7 +38,7 @@ struct LoginView: View {
     
     var body: some View {
         VStack {
-            Text(isRegistering ? "Register" : "Login")
+            Text(viewModel.isRegistering ? "Register" : "Login")
                 .font(.headline)
                 .padding()
             
@@ -63,15 +62,15 @@ struct LoginView: View {
                     .padding()
             }
             
-            Button(isRegistering ? "Register" : "Login") {
-                handleAuthentication()
+            Button(viewModel.isRegistering ? "Register" : "Login") {
+                handleLoginOrRegister()
             }
             .disabled(!isFormValid)
             .buttonStyle(.borderedProminent)
             .padding()
             
-            Button(isRegistering ? "Back to Login" : "Go to Register") {
-                isRegistering.toggle()
+            Button(viewModel.isRegistering ? "Back to Login" : "Go to Register") {
+                viewModel.isRegistering.toggle()
             }
             .buttonStyle(.link)
             .padding(.top)

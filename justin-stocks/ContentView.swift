@@ -30,7 +30,9 @@ struct ContentView: View {
                 }
                 .navigationSplitViewColumnWidth(min: 180, ideal: 200)
             } detail: {
-                Text("Select an item")
+                Text(appState.authToken ?? "Unknown User")
+                    .font(.caption)
+                    .padding()
             }
             .sheet(isPresented: .constant(!appState.isLoggedIn)) {
                 LoginView()
@@ -57,4 +59,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .modelContainer(for: Item.self, inMemory: true)
+        .environmentObject(AppState())
 }

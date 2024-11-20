@@ -11,8 +11,14 @@ class LoginViewModel: ObservableObject {
     @Published var username: String = ""
     @Published var password: String = ""
     @Published var isLoading: Bool = false
+    @Published var isRegistering = false
     @Published var errorMessage: String?
     
+    func clearFields() {
+        username = ""
+        password = ""
+    }
+        
     func login(appState: AppState) {
         guard !username.isEmpty, !password.isEmpty else {
             errorMessage = "All fields are required"
@@ -21,13 +27,50 @@ class LoginViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        // Simulate API Call
-        // TODO: call our backend via our api service.
-        DispatchQueue.global().asyncAfter(deadline: .now() + 1) {
-            DispatchQueue.main.async {
-                appState.authToken = "fakeToken123"
-                appState.isLoggedIn = true
-                self.isLoading = false
+        // API Call
+        APIManager.shared.login(username: username, password: password) { result in
+            switch result {
+            case .success(let response):
+                if response.error {
+                    print("Login failed: \(response.reason ?? "Unknown error")")
+                } else {
+                    print("Login successful! Token: \(response.token ?? "")")
+                    self.clearFields()
+                    DispatchQueue.main.async {
+                        appState.authToken = response.token
+                        appState.isLoggedIn = true
+                        self.isLoading = false
+                    }
+                }
+            case .failure(let error):
+                print("Request failed with error: \(error.localizedDescription)")
+            }
+        }
+    }
+    
+    func register() {
+        guard !username.isEmpty, !password.isEmpty else {
+            errorMessage = "All fields are required"
+            return
+        }
+        isLoading = true
+        errorMessage = nil
+        
+        APIManager.shared.register(username: username, password: password) { result in
+            switch result {
+            case .success(let response):
+                if response.error {
+                    print("Registration failed: \(response.reason ?? "Unknown error")")
+                } else {
+                    print("Registration successful!")
+                    self.clearFields()
+                    DispatchQueue.main.async {
+                        self.isLoading = false
+                        self.isRegistering = false
+                    }
+                }
+            case .failure(let error):
+                print("Request failed with error: \(error.localizedDescription)")
             }
         }
     }
