@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1A0C3B682CEE0737003F5F2E /* JustinStocksSharedDTO in Frameworks */ = {isa = PBXBuildFile; productRef = 1A0C3B672CEE0737003F5F2E /* JustinStocksSharedDTO */; };
+		1A0C3B6B2CEE0750003F5F2E /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = 1A0C3B6A2CEE0750003F5F2E /* SwiftSoup */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		1A0C3B522CEE05DD003F5F2E /* justin-stocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "justin-stocks.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +28,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1A0C3B682CEE0737003F5F2E /* JustinStocksSharedDTO in Frameworks */,
+				1A0C3B6B2CEE0750003F5F2E /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +72,8 @@
 			);
 			name = "justin-stocks";
 			packageProductDependencies = (
+				1A0C3B672CEE0737003F5F2E /* JustinStocksSharedDTO */,
+				1A0C3B6A2CEE0750003F5F2E /* SwiftSoup */,
 			);
 			productName = "justin-stocks";
 			productReference = 1A0C3B522CEE05DD003F5F2E /* justin-stocks.app */;
@@ -94,6 +103,10 @@
 			);
 			mainGroup = 1A0C3B492CEE05DD003F5F2E;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1A0C3B662CEE0737003F5F2E /* XCRemoteSwiftPackageReference "JustinStocksSharedDTO" */,
+				1A0C3B692CEE0750003F5F2E /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1A0C3B532CEE05DD003F5F2E /* Products */;
 			projectDirPath = "";
@@ -321,6 +334,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1A0C3B662CEE0737003F5F2E /* XCRemoteSwiftPackageReference "JustinStocksSharedDTO" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vrjustin/JustinStocksSharedDTO.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		1A0C3B692CEE0750003F5F2E /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1A0C3B672CEE0737003F5F2E /* JustinStocksSharedDTO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A0C3B662CEE0737003F5F2E /* XCRemoteSwiftPackageReference "JustinStocksSharedDTO" */;
+			productName = JustinStocksSharedDTO;
+		};
+		1A0C3B6A2CEE0750003F5F2E /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1A0C3B692CEE0750003F5F2E /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1A0C3B4A2CEE05DD003F5F2E /* Project object */;
 }

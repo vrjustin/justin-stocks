@@ -1,0 +1,24 @@
+{
+  "originHash" : "5b4d8dc5df7332bfa1457a23a6e02d68f1830c423428e8411ff06939e52cb3ec",
+  "pins" : [
+    {
+      "identity" : "justinstocksshareddto",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vrjustin/JustinStocksSharedDTO.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "4c49af56e6a8d7c717ecfa27309a2f3b1f388f32"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup.git",
+      "state" : {
+        "revision" : "0837db354faf9c9deb710dc597046edaadf5360f",
+        "version" : "2.7.6"
+      }
+    }
+  ],
+  "version" : 3
+}
