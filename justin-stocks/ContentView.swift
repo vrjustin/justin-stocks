@@ -10,37 +10,13 @@ import SwiftData
 
 struct ContentView: View {
     @EnvironmentObject var appState: AppState
-    @Environment(\.modelContext) private var modelContext
-    @Query private var items: [Item]
     
     @State private var showLoginModal = true
-    
-    private func logout() {
-        appState.clearToken()
-    }
     
     var body: some View {
         ZStack {
             NavigationSplitView {
-                VStack {
-                    List {
-                        ForEach(items) { item in
-                            NavigationLink {
-                                Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
-                            } label: {
-                                Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
-                            }
-                        }
-                        .onDelete(perform: deleteItems)
-                    }
-                    .navigationSplitViewColumnWidth(min: 180, ideal: 200)
-                    Spacer()
-                    Button("Logout") {
-                        logout()
-                    }
-                    .disabled(!appState.isLoggedIn)
-                    .padding()
-                }
+                SidebarView()
             } detail: {
                 VStack {
                     Text(appState.authToken ?? "Unknown User")
@@ -51,21 +27,6 @@ struct ContentView: View {
             }
             .sheet(isPresented: .constant(!appState.isLoggedIn)) {
                 LoginView()
-            }
-        }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(timestamp: Date())
-            modelContext.insert(newItem)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(items[index])
             }
         }
     }
